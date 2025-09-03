@@ -1,4 +1,6 @@
 # Learn API
+[![Test and Coverage](https://github.com/chatre7/learn-go-api/actions/workflows/test-coverage.yml/badge.svg)](https://github.com/chatre7/learn-go-api/actions/workflows/test-coverage.yml)
+[![codecov](https://codecov.io/gh/chatre7/learn-go-api/branch/main/graph/badge.svg)](https://codecov.io/gh/chatre7/learn-go-api)
 
 A RESTful API built with Go, PostgreSQL, and Docker.
 
@@ -27,6 +29,7 @@ A RESTful API built with Go, PostgreSQL, and Docker.
 │   ├── errors/              # Error handling utilities
 │   └── validation/          # Validation utilities
 ├── tests/
+│   ├── e2e/                 # End-to-end tests
 │   ├── handlers/            # Tests for HTTP layer
 │   ├── services/            # Tests for business logic
 │   └── repository/          # Tests for data access
@@ -91,6 +94,13 @@ Run unit tests:
 ```bash
 go test ./tests/... -v
 ```
+
+Run end-to-end tests (requires the application to be running):
+```bash
+go test ./tests/e2e/... -v
+```
+
+See [tests/e2e/README.md](tests/e2e/README.md) for more information about end-to-end tests.
 
 ## Database Schema
 
