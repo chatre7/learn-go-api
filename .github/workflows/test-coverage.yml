@@ -1,3 +1,10 @@
+# This workflow will run tests with coverage and upload the results to Codecov
+# To enable Codecov integration:
+# 1. Sign up at https://codecov.io (free for open source)
+# 2. Add your repository to Codecov
+# 3. Optionally, add CODECOV_TOKEN as a secret in your repository settings
+#    (not required for public repositories)
+
 name: Test and Coverage
 
 on:
@@ -32,6 +39,7 @@ jobs:
         file: ./coverage.txt
         flags: unittests
         name: codecov-learn-api
+        fail_ci_if_error: false  # Optional: Set to true if you want CI to fail when Codecov fails
 
     - name: Archive code coverage results
       uses: actions/upload-artifact@v3
