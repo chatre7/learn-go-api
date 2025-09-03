@@ -1,0 +1,136 @@
+definitions:
+  models.EntityRequest:
+    properties:
+      name:
+        type: string
+    required:
+    - name
+    type: object
+info:
+  contact: {}
+paths:
+  /entities:
+    get:
+      description: Get a list of all entities
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties: true
+            type: object
+      summary: List all entities
+      tags:
+      - entities
+    post:
+      consumes:
+      - application/json
+      description: Create a new entity with the provided data
+      parameters:
+      - description: Entity to create
+        in: body
+        name: entity
+        required: true
+        schema:
+          $ref: '#/definitions/models.EntityRequest'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            additionalProperties: true
+            type: object
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties: true
+            type: object
+      summary: Create an entity
+      tags:
+      - entities
+  /entities/{id}:
+    delete:
+      description: Delete an entity by its ID
+      parameters:
+      - description: Entity ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "204":
+          description: Entity deleted successfully
+        "404":
+          description: Not Found
+          schema:
+            additionalProperties: true
+            type: object
+      summary: Delete entity by ID
+      tags:
+      - entities
+    get:
+      description: Get an entity by its ID
+      parameters:
+      - description: Entity ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties: true
+            type: object
+        "404":
+          description: Not Found
+          schema:
+            additionalProperties: true
+            type: object
+      summary: Get entity by ID
+      tags:
+      - entities
+    put:
+      consumes:
+      - application/json
+      description: Update an existing entity with the provided data
+      parameters:
+      - description: Entity ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: Entity data to update
+        in: body
+        name: entity
+        required: true
+        schema:
+          $ref: '#/definitions/models.EntityRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties: true
+            type: object
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties: true
+            type: object
+        "404":
+          description: Not Found
+          schema:
+            additionalProperties: true
+            type: object
+      summary: Update entity by ID
+      tags:
+      - entities
+swagger: "2.0"

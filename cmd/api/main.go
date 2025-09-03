@@ -1,10 +1,28 @@
+// Package main implements a REST API for managing entities.
+//
+//	Schemes: http
+//	Host: localhost:8080
+//	BasePath: /api/v1
+//	Version: 1.0.0
+//
+//	Consumes:
+//	- application/json
+//
+//	Produces:
+//	- application/json
+//
+// swagger:meta
 package main
 
 import (
 	"log"
-	"net/http"
 	"os"
 
+	"github.com/gofiber/fiber/v2"
+	"github.com/gofiber/fiber/v2/middleware/logger"
+	"github.com/gofiber/swagger"
+
+	_ "learn-api/docs" // Import the generated docs
 	"learn-api/internal/database"
 	"learn-api/internal/handlers"
 	"learn-api/internal/repository"
@@ -22,36 +40,31 @@ func main() {
 	entityService := services.NewEntityService(entityRepo)
 	entityHandler := handlers.NewEntityHandler(entityService)
 
+	// Create Fiber app
+	app := fiber.New()
+
+	// Add logger middleware
+	app.Use(logger.New())
+
 	// Health check endpoint
-	http.HandleFunc("/health", func(w http.ResponseWriter, r *http.Request) {
-		w.WriteHeader(http.StatusOK)
-		w.Write([]byte("OK"))
+	app.Get("/health", func(c *fiber.Ctx) error {
+		return c.SendString("OK")
 	})
 
-	// Set up routes
-	http.HandleFunc("/api/v1/entities", func(w http.ResponseWriter, r *http.Request) {
-		switch r.Method {
-		case http.MethodGet:
-			entityHandler.GetAllEntities(w, r)
-		case http.MethodPost:
-			entityHandler.CreateEntity(w, r)
-		default:
-			http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
-		}
-	})
+	// Serve Swagger UI
+	app.Get("/swagger/*", swagger.HandlerDefault)
 
-	http.HandleFunc("/api/v1/entities/", func(w http.ResponseWriter, r *http.Request) {
-		switch r.Method {
-		case http.MethodGet:
-			entityHandler.GetEntityByID(w, r)
-		case http.MethodPut:
-			entityHandler.UpdateEntity(w, r)
-		case http.MethodDelete:
-			entityHandler.DeleteEntity(w, r)
-		default:
-			http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
-		}
-	})
+	// API routes
+	api := app.Group("/api/v1")
+
+	// Entity routes
+	entities := api.Group("/entities")
+
+	entities.Get("/", entityHandler.GetAllEntitiesFiber)
+	entities.Post("/", entityHandler.CreateEntityFiber)
+	entities.Get("/:id", entityHandler.GetEntityByIDFiber)
+	entities.Put("/:id", entityHandler.UpdateEntityFiber)
+	entities.Delete("/:id", entityHandler.DeleteEntityFiber)
 
 	// Get port from environment variable or use default
 	port := os.Getenv("PORT")
@@ -60,5 +73,5 @@ func main() {
 	}
 
 	log.Printf("Server starting on port %s", port)
-	log.Fatal(http.ListenAndServe(":"+port, nil))
+	log.Fatal(app.Listen(":" + port))
 }
