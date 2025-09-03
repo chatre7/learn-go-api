@@ -32,7 +32,7 @@ This project uses Codecov for code coverage reporting. This document explains ho
        5. Update the workflow file to use the token:
           ```yaml
           - name: Upload coverage to Codecov
-            uses: codecov/codecov-action@v3
+            uses: codecov/codecov-action@v4
             with:
               file: ./coverage.txt
               flags: unittests
