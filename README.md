@@ -11,6 +11,7 @@ A RESTful API built with Go, PostgreSQL, and Docker.
 - Comprehensive unit testing
 - Docker containerization
 - Clean architecture with separation of concerns
+- **Web Framework**: [Fiber](https://gofiber.io/) - An Express-inspired web framework for Go
 
 ## Project Structure
 
@@ -33,12 +34,25 @@ A RESTful API built with Go, PostgreSQL, and Docker.
 │   ├── handlers/            # Tests for HTTP layer
 │   ├── services/            # Tests for business logic
 │   └── repository/          # Tests for data access
+├── docs/                    # Swagger documentation
 ├── Dockerfile               # Container configuration
 ├── docker-compose.yml       # Multi-container setup
 ├── init.sql                 # Database initialization
 ├── go.mod                   # Go module dependencies
 └── README.md                # This file
 ```
+
+## Web Framework
+
+This project uses [Fiber](https://gofiber.io/), an Express-inspired web framework for Go. Fiber is built on top of Fasthttp, the fastest HTTP engine for Go, and is designed to ease things up for fast development with zero memory allocation and performance in mind.
+
+### Why Fiber?
+
+- **Fast**: Built on Fasthttp, the fastest HTTP engine for Go
+- **Express-like**: Familiar API for developers coming from Node.js
+- **Lightweight**: Minimal overhead and small memory footprint
+- **Rich Middleware**: Built-in support for common HTTP functionalities
+- **Easy Testing**: Simple testing utilities for HTTP handlers
 
 ## API Endpoints
 
@@ -49,6 +63,8 @@ A RESTful API built with Go, PostgreSQL, and Docker.
 | POST   | /api/v1/entities     | Create new entity    |
 | PUT    | /api/v1/entities/{id}| Update entity by ID  |
 | DELETE | /api/v1/entities/{id}| Delete entity by ID  |
+| GET    | /swagger/*           | Swagger UI           |
+| GET    | /health              | Health check         |
 
 ## Getting Started
 
@@ -87,6 +103,11 @@ A RESTful API built with Go, PostgreSQL, and Docker.
    ```bash
    go run cmd/api/main.go
    ```
+
+## API Documentation
+
+The API is documented using Swagger. After starting the application, you can access the Swagger UI at:
+- `http://localhost:8080/swagger/index.html`
 
 ## Testing
 
