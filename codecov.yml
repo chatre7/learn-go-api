@@ -1,0 +1,26 @@
+# Codecov configuration for learn-go-api
+
+coverage:
+  status:
+    project:
+      default:
+        # Aim for full coverage on measured code
+        target: 100%
+        threshold: 0%
+    patch:
+      default:
+        target: auto
+
+ignore:
+  # Generated and documentation files
+  - docs/**
+  # CLI entry points that are hard to unit test
+  - cmd/**/main.go
+  # External test harness code shouldn't count against project coverage
+  - tests/**
+  # Mocks
+  - "**/*_mock.go"
+
+comment:
+  layout: "reach, diff, flags, files"
+  require_changes: false

@@ -29,9 +29,14 @@ jobs:
     - name: Install dependencies
       run: go mod download
 
-    - name: Run unit tests with coverage
+    - name: Run tests with full instrumentation coverage
       run: |
-        go test -v -coverprofile=coverage.txt -covermode=atomic ./tests/... ./internal/...
+        # Instrument application packages and run all tests (including external tests under ./tests)
+        go test -short -v \
+          -covermode=atomic \
+          -coverpkg=./internal/...,./pkg/... \
+          ./... \
+          -coverprofile=coverage.txt
         
     - name: Upload coverage to Codecov
       uses: codecov/codecov-action@v4
