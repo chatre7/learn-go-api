@@ -6,6 +6,17 @@ Language: English | [ภาษาไทย](README.th.md)
 
 A RESTful API built with Go, PostgreSQL, and Docker.
 
+## Contents
+
+- [Features](#features)
+- [Project Structure](#project-structure)
+- [Web Framework](#web-framework)
+- [API Endpoints](#api-endpoints)
+- [Getting Started](#getting-started)
+- [API Documentation](#api-documentation)
+- [Testing](#testing)
+- [Database Schema](#database-schema)
+
 ## Features
 
 - CRUD operations for entities
