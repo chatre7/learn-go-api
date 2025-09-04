@@ -23,11 +23,12 @@ RESTful API ที่พัฒนาด้วย Go, PostgreSQL และ Docker
 │   └── api/
 │       └── main.go          # จุดเริ่มต้นของแอปพลิเคชัน
 ├── internal/
-│   ├── handlers/            # Handler สำหรับ Request HTTP
-│   ├── services/            # (Business Logic)
+│   ├── handlers/            # ฮैंडเลอร์สำหรับคำขอ HTTP
+│   ├── services/            # ตรรกะทางธุรกิจ (Business Logic)
 │   ├── models/              # โครงสร้างข้อมูล (Data Structures)
 │   ├── repository/          # เลเยอร์เข้าถึงข้อมูล (Data Access)
-│   └── database/            # ยูทิลิตีสำหรับเชื่อมต่อฐานข้อมูล
+│   ├── database/            # ยูทิลิตีสำหรับเชื่อมต่อฐานข้อมูล
+│   └── app/                 # ตัวช่วยประกอบแอป (NewFiberApp)
 ├── pkg/
 │   ├── errors/              # ยูทิลิตีสำหรับจัดการข้อผิดพลาด
 │   └── validation/          # ยูทิลิตีสำหรับตรวจสอบความถูกต้องของข้อมูล
@@ -35,7 +36,8 @@ RESTful API ที่พัฒนาด้วย Go, PostgreSQL และ Docker
 │   ├── e2e/                 # การทดสอบแบบ End-to-End
 │   ├── handlers/            # การทดสอบเลเยอร์ HTTP
 │   ├── services/            # การทดสอบตรรกะทางธุรกิจ
-│   └── repository/          # การทดสอบเลเยอร์เข้าถึงข้อมูล
+│   ├── repository/          # การทดสอบเลเยอร์เข้าถึงข้อมูล
+│   └── app/                 # การทดสอบการประกอบแอป (health/routes)
 ├── docs/                    # เอกสาร Swagger
 ├── Dockerfile               # การตั้งค่า Container
 ├── docker-compose.yml       # การตั้งค่าแบบหลายคอนเทนเนอร์
@@ -113,33 +115,41 @@ RESTful API ที่พัฒนาด้วย Go, PostgreSQL และ Docker
 
 ## การทดสอบ
 
-รันทดสอบหน่วย (Unit Tests):
+รันการทดสอบทั้งหมดพร้อมเก็บ Coverage ครอบคลุมแพ็กเกจแอป:
 ```bash
-go test ./tests/... -v
+go test -short -v \
+  -covermode=atomic \
+  -coverpkg=./internal/...,./pkg/...,./cmd/... \
+  ./... \
+  -coverprofile=coverage.txt
 ```
 
-รันทดสอบแบบ End-to-End (ต้องให้แอปทำงานอยู่):
+สรุป Coverage:
 ```bash
-go test ./tests/e2e/... -v
+go tool cover -func=coverage.txt
 ```
 
-หมายเหตุ: หากแอปพลิเคชันยังไม่ทำงานหรือฐานข้อมูลไม่พร้อม การทดสอบแบบ End-to-End จะถูกข้ามโดยอัตโนมัติ (ไม่ล้มเหลว)
-
-### ความครอบคลุมของโค้ด (Code Coverage)
-
-โปรเจกต์นี้ใช้ Codecov สำหรับรายงานความครอบคลุมของโค้ด รายงานจะถูกสร้างโดย GitHub Actions และอัปโหลดไปยัง Codecov อัตโนมัติ
-
-รันทดสอบพร้อมเก็บ Coverage แบบโลคอล:
-```bash
-go test -coverprofile=coverage.txt ./tests/handlers ./tests/services
-```
-
-เปิดดู Coverage แบบ HTML:
+ดูรายงานแบบ HTML:
 ```bash
 go tool cover -html=coverage.txt
 ```
 
-ดูรายละเอียดเพิ่มเติมเกี่ยวกับการทดสอบ End-to-End ได้ที่ `tests/e2e/README.md`
+การทดสอบ Repository ต้องใช้ PostgreSQL วิธีที่แนะนำ:
+- ใช้ Docker Compose: `docker-compose up -d db`
+- หรือกำหนดตัวแปรแวดล้อมสำหรับฐานข้อมูลโลคอล:
+  - `TEST_DB_HOST=127.0.0.1`
+  - `TEST_DB_PORT=5432`
+  - `TEST_DB_USER=postgres`
+  - `TEST_DB_PASSWORD=postgres`
+  - `TEST_DB_NAME=learnapi_test`
+
+การทดสอบ E2E ต้องให้ API รันที่ `http://localhost:8080` หากไม่ต้องการรัน E2E ให้ตั้งค่า `SKIP_E2E_TESTS=true` ก่อนรันทดสอบ
+
+### ความครอบคลุมของโค้ด (Code Coverage)
+
+CI จะอัปโหลด Coverage ไปยัง Codecov โดยใช้ไฟล์ `codecov.yml` เพื่อไม่รวมไฟล์เอกสาร ม็อก และโค้ดทดสอบออกจากตัวหาร Coverage (badge แสดงไว้ด้านบน)
+
+ดูรายละเอียดเพิ่มเติมเกี่ยวกับ E2E ได้ที่ `tests/e2e/README.md`
 
 ## โครงสร้างฐานข้อมูล
 
