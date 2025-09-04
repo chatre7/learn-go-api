@@ -21,8 +21,8 @@ RESTful API ที่พัฒนาด้วย Go, PostgreSQL และ Docker
 │   └── api/
 │       └── main.go          # จุดเริ่มต้นของแอปพลิเคชัน
 ├── internal/
-│   ├── handlers/            # ฮ্যান্ডเลอร์สำหรับคำขอ HTTP
-│   ├── services/            # ตรรกะทางธุรกิจ (Business Logic)
+│   ├── handlers/            # Handler สำหรับ Request HTTP
+│   ├── services/            # (Business Logic)
 │   ├── models/              # โครงสร้างข้อมูล (Data Structures)
 │   ├── repository/          # เลเยอร์เข้าถึงข้อมูล (Data Access)
 │   └── database/            # ยูทิลิตีสำหรับเชื่อมต่อฐานข้อมูล
