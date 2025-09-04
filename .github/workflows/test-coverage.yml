@@ -34,7 +34,7 @@ jobs:
         # Instrument application packages and run all tests (including external tests under ./tests)
         go test -short -v \
           -covermode=atomic \
-          -coverpkg=./internal/...,./pkg/... \
+          -coverpkg=./internal/...,./pkg/...,./cmd/... \
           ./... \
           -coverprofile=coverage.txt
         

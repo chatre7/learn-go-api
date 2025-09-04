@@ -14,8 +14,6 @@ coverage:
 ignore:
   # Generated and documentation files
   - docs/**
-  # CLI entry points that are hard to unit test
-  - cmd/**/main.go
   # External test harness code shouldn't count against project coverage
   - tests/**
   # Mocks
