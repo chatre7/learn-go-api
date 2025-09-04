@@ -16,6 +16,7 @@ RESTful API ที่พัฒนาด้วย Go, PostgreSQL และ Docker
 - [เอกสาร API](#เอกสาร-api)
 - [การทดสอบ](#การทดสอบ)
 - [โครงสร้างฐานข้อมูล](#โครงสร้างฐานข้อมูล)
+- [แผนภาพความสัมพันธ์ของเอนทิตี (ERD)](#แผนภาพความสัมพันธ์ของเอนทิตี-erd)
 
 ## คุณสมบัติ
 
@@ -173,4 +174,18 @@ CREATE TABLE entities (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
+```
+
+## แผนภาพความสัมพันธ์ของเอนทิตี (ERD)
+
+แอปพลิเคชันนี้ใช้แผนภาพความสัมพันธ์ของเอนทิตีดังนี้:
+
+```mermaid
+erDiagram
+    ENTITIES {
+        INT id PK
+        VARCHAR name
+        TIMESTAMP created_at
+        TIMESTAMP updated_at
+    }
 ```

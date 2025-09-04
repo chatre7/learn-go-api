@@ -16,6 +16,7 @@ A RESTful API built with Go, PostgreSQL, and Docker.
 - [API Documentation](#api-documentation)
 - [Testing](#testing)
 - [Database Schema](#database-schema)
+- [Entity Relationship Diagram](#entity-relationship-diagram)
 
 ## Features
 
@@ -172,4 +173,18 @@ CREATE TABLE entities (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
+```
+
+## Entity Relationship Diagram
+
+The application uses the following entity relationship model:
+
+```mermaid
+erDiagram
+    ENTITIES {
+        INT id PK
+        VARCHAR name
+        TIMESTAMP created_at
+        TIMESTAMP updated_at
+    }
 ```
