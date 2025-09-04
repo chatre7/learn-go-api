@@ -1,10 +1,10 @@
-package app
+package app_test
 
 import (
     "net/http"
     "testing"
 
-    api "learn-api/cmd/api"
+    apppkg "learn-api/internal/app"
     "learn-api/internal/models"
     "learn-api/internal/services/mocks"
 )
@@ -15,7 +15,7 @@ func TestNewFiberApp_HealthAndRoutes(t *testing.T) {
     mockService.On("GetAllEntities").Return([]*models.Entity{}, nil)
 
     // Act: build app
-    app := api.NewFiberApp(mockService)
+    app := apppkg.NewFiberApp(mockService)
 
     // Assert: health endpoint
     reqHealth, _ := http.NewRequest("GET", "/health", nil)
@@ -39,4 +39,3 @@ func TestNewFiberApp_HealthAndRoutes(t *testing.T) {
 
     mockService.AssertExpectations(t)
 }
-
