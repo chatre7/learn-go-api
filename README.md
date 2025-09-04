@@ -2,6 +2,8 @@
 [![Test and Coverage](https://github.com/chatre7/learn-go-api/actions/workflows/test-coverage.yml/badge.svg)](https://github.com/chatre7/learn-go-api/actions/workflows/test-coverage.yml)
 [![codecov](https://codecov.io/gh/chatre7/learn-go-api/branch/main/graph/badge.svg)](https://codecov.io/gh/chatre7/learn-go-api)
 
+Language: English | [ภาษาไทย](README.th.md)
+
 A RESTful API built with Go, PostgreSQL, and Docker.
 
 ## Features

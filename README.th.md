@@ -2,6 +2,8 @@
 [![Test and Coverage](https://github.com/chatre7/learn-go-api/actions/workflows/test-coverage.yml/badge.svg)](https://github.com/chatre7/learn-go-api/actions/workflows/test-coverage.yml)
 [![codecov](https://codecov.io/gh/chatre7/learn-go-api/branch/main/graph/badge.svg)](https://codecov.io/gh/chatre7/learn-go-api)
 
+ภาษา: [English](README.md) | ไทย
+
 RESTful API ที่พัฒนาด้วย Go, PostgreSQL และ Docker
 
 ## คุณสมบัติ
@@ -151,4 +153,3 @@ CREATE TABLE entities (
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 ```
-
