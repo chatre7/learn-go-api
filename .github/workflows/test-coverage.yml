@@ -40,7 +40,8 @@ jobs:
         flags: unittests
         name: codecov-learn-api
         fail_ci_if_error: false  # Optional: Set to true if you want CI to fail when Codecov fails
-
+        token: ${{ secrets.CODECOV_TOKEN }}
+    
     - name: Archive code coverage results
       uses: actions/upload-artifact@v4
       with:
